@@ -6,7 +6,6 @@ import ra.util.InputMethods;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class BookManagement {
     static List<Book> listBooks = new ArrayList<>();
@@ -90,23 +89,25 @@ public class BookManagement {
 
     //4. Xóa sách theo mã sách
     public static void removeBook() {
-        boolean isCheck = true;
+        boolean isCheck = false;
         int inputId;
         int index = 0;
         System.out.print("Nhập mã sách mà bạn muốn xoá: ");
         inputId = InputMethods.getInteger();
 
+
         for (int i = 0; i < listBooks.size(); i++) {
-            if (listBooks.get(i).getBookId() != inputId) {
-                System.out.print("Không tìm thấy mã sách mà bạn muốn xoá");
-                isCheck = false;
-            } else {
+            if (listBooks.get(i).getBookId() == inputId) {
+                isCheck = true;
                 index = i;
+                break;
             }
         }
         if (isCheck) {
             listBooks.remove(index);
             System.out.printf("Đã xoá sách có mã %d\n", inputId);
+        } else {
+            System.out.println("Không tìm thấy mã sách mà bạn muốn xoá");
         }
     }
     //5. Tìm kiếm tương đối sách theo tên sách
@@ -127,25 +128,23 @@ public class BookManagement {
 
     //6. Thay đổi trạng thái của sách theo mã sách
     public static void updateStatus() {
-        boolean isCheck = true;
+        boolean isCheck = false;
         int inputId;
         int index = 0;
-        System.out.print("Nhập mã sách mà bạn muốn xoá: ");
+        System.out.print("Nhập mã sách mà bạn muốn update: ");
         inputId = InputMethods.getInteger();
         for (int i = 0; i < listBooks.size(); i++) {
-            if (listBooks.get(i).getBookId() != inputId) {
-                System.out.print("Không tìm thấy mã sách mà bạn muốn xoá");
-                return;
-            } else {
+            if (listBooks.get(i).getBookId() == inputId) {
+                isCheck = true;
                 index = i;
+                break;
             }
         }
         if (isCheck) {
             listBooks.get(index).setBookStatus(!listBooks.get(index).isBookStatus());
             System.out.printf("Đã thay đổi trạng thái sách có mã %d\n", inputId);
-
+        } else {
+            System.out.println("Không tìm thấy mã sách mà bạn muốn update");
         }
     }
-
-
 }
